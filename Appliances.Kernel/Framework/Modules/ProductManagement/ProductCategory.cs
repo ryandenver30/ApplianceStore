@@ -23,7 +23,7 @@ namespace Appliances.Kernel.Framework.Modules.ProductManagement
         {
             this.CategoryName = name;
         }
-        public ProductCategory Create(string name)
+        public static ProductCategory Create(string name)
         {
             return new ProductCategory(name);
         }

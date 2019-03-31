@@ -28,11 +28,11 @@ namespace Appliances.Kernel.Framework.Modules.ProductManagement
             this.OperatingSystem = operatingSystem;
             this.Description = description;
         }
-        private ProductSubCategory Create(string name, string brandName, string operatingSystem, string description)
+        public static ProductSubCategory Create(string name, string brandName, string operatingSystem, string description)
         {
             return new ProductSubCategory(name, brandName, operatingSystem, description);
         }
-        private void Update(string name, string brandName, string operatingSystem, string description)
+        public void Update(string name, string brandName, string operatingSystem, string description)
         {
             this.Name = name;
             this.BrandName = brandName;

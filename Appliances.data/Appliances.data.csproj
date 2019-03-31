@@ -265,18 +265,22 @@
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CountryController.cs" />
+    <Compile Include="Controllers\ExhibitorController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\StateController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CityDTO.cs" />
     <Compile Include="Models\CountryDTO.cs" />
-    <Compile Include="Models\ProductManagement\Product.cs" />
+    <Compile Include="Models\ProductManagement\ProductDTO.cs" />
     <Compile Include="Models\ProductManagement\ProductCategoryDTO.cs" />
-    <Compile Include="Models\ProductManagement\ProductSubCategory.cs" />
+    <Compile Include="Models\ProductManagement\ProductSubCategoryDTO.cs" />
     <Compile Include="Models\StateDTO.cs" />
     <Compile Include="Models\StoreManagement\ExhibitorAddressDTO.cs" />
     <Compile Include="Models\StoreManagement\ExhibitorStoreDTO.cs" />
+    <Compile Include="Models\UserManagement\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -290,7 +294,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\UserManagement\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Appliances.Kernel\Appliances.Kernel.csproj">

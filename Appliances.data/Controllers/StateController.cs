@@ -73,7 +73,7 @@ namespace Appliances.data.Controllers
             }
         }
 
-        public StateDTO GetDTO(State state)
+        private StateDTO GetDTO(State state)
         {
             StateDTO stateDTO = new StateDTO();
             stateDTO.StateName = state.StateName;

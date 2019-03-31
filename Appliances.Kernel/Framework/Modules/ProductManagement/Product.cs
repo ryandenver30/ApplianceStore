@@ -36,7 +36,7 @@ namespace Appliances.Kernel.Framework.Modules.ProductManagement
             this.Size = size;
             this.Weight = weight;
         }
-        public Product Create(string name, string modelNo, string description, double price, string color, string size, double weight)
+        public static Product Create(string name, string modelNo, string description, double price, string color, string size, double weight)
         {
             return new Product( name,  modelNo,  description,  price,  color,  size,  weight);
         }

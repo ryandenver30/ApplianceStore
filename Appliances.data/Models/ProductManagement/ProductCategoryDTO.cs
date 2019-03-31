@@ -7,6 +7,7 @@ namespace Appliances.data.Models.ProductManagement
 {
     public class ProductCategoryDTO
     {
+        public Guid Id { get; set; }
         public string CategoryName { get; set; }
     }
 }

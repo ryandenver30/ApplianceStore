@@ -19,21 +19,16 @@ namespace Appliances.data.Controllers
         /// <summary>
         /// Get all Country
         /// </summary>
-        /// <param name="organizerId"></param>
         /// <returns></returns>
         [Route("")]
         [ResponseType(typeof(List<CountryDTO>))]
         public IHttpActionResult Get()
         {
-            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Reading))
-            {
-
                 var countries = _countryRepository.Find(new GetAllSpecification<Country>()).OrderBy(x => x.CountryName);
                 if (countries == null)
                     return NotFound();
 
                 return Ok(countries.ToList());
-            }
         }
 
         /// <summary>

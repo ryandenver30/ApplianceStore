@@ -7,7 +7,9 @@ namespace Appliances.data.Models.StoreManagement
 {
     public class ExhibitorStoreDTO
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string WebsiteURL { get; set; }
+        public IList<ExhibitorAddressDTO> ExhibitorAddresses { get; set; }
     }
 }

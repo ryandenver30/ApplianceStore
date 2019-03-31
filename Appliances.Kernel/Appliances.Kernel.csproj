@@ -60,13 +60,15 @@
     <Compile Include="Framework\Modules\ProductManagement\ProductSubCategory.cs" />
     <Compile Include="Framework\Modules\StoreManagement\ExhibitorAddress.cs" />
     <Compile Include="Framework\Modules\StoreManagement\ExhibitorStore.cs" />
-    <Compile Include="Framework\Modules\UserManagement\User.cs" />
+    <Compile Include="Framework\Modules\UserManagement\AppUser.cs" />
     <Compile Include="Framework\Repository\AppliancesContext.cs" />
     <Compile Include="Framework\Repository\Disposable.cs" />
     <Compile Include="Framework\Repository\IRepository.cs" />
     <Compile Include="Framework\Repository\ISpecification.cs" />
     <Compile Include="Framework\Repository\Repository.cs" />
     <Compile Include="Framework\Repository\UnitOfWork.cs" />
+    <Compile Include="Framework\Specifications\ExhibitorStoreCriteria.cs" />
+    <Compile Include="Framework\Specifications\ExhibitorStoreSpecification.cs" />
     <Compile Include="Framework\Specifications\GetAllSpecification.cs" />
     <Compile Include="Migrations\201903131331448_Initial.cs" />
     <Compile Include="Migrations\201903131331448_Initial.Designer.cs">

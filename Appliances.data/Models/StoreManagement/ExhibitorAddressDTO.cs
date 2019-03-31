@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Web;
 
@@ -13,7 +14,9 @@ namespace Appliances.data.Models.StoreManagement
         public string OfficeNo { get; set; }
         public string ExhibitorName { get; set; }
         public string EmailId { get; set; }
-        public string Longitude { get; set; }
-        public string Latitude { get; set; }
+        public DbGeography Location { get; set; }
+        public CountryDTO Country { get; set; }
+        public StateDTO State { get; set; }
+
     }
 }

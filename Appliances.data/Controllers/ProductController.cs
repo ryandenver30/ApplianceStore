@@ -9,8 +9,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Product = Appliances.Kernel.Framework.Modules.ProductManagement.Product;
-using ProductSubCategory = Appliances.Kernel.Framework.Modules.ProductManagement.ProductSubCategory;
 
 namespace Appliances.data.Controllers
 {
@@ -18,34 +16,31 @@ namespace Appliances.data.Controllers
     public class ProductController : ApiController
     {
         private IRepository<Product> _productRepository = new Repository<Product>();
+        private IRepository<ProductCategory> _productCategoryRepository = new Repository<ProductCategory>();
         private IRepository<ProductSubCategory> _productSubCategoryRepository = new Repository<ProductSubCategory>();
         
         /// <summary>
-        /// Get all ProductCategories
+        /// Get all Product Categories
         /// </summary>
         /// <returns></returns>
         [Route("")]
         [ResponseType(typeof(List<ProductCategoryDTO>))]
-        public IHttpActionResult Get()
+        public IHttpActionResult GetProductCategories()
         {
-            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Reading))
-            {
-
                 var categories = _productCategoryRepository.Find(new GetAllSpecification<ProductCategory>()).OrderBy(x => x.CategoryName);
                 if (categories == null)
                     return NotFound();
 
                 return Ok(categories.ToList());
-            }
         }
 
         /// <summary>
-        /// Add ProductCategories
+        /// Add Product Categories
         /// </summary>
         /// <returns></returns>
         [Route("")]
         [ResponseType(typeof(List<ProductCategoryDTO>))]
-        public IHttpActionResult Post(ProductCategoryDTO categoryDTO)
+        public IHttpActionResult PostProductCategory(ProductCategoryDTO categoryDTO)
         {
             using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Writing))
             {
@@ -54,16 +49,18 @@ namespace Appliances.data.Controllers
                 _productCategoryRepository.Add(categories);
                 unitOfWork.SaveChanges();
 
-                return Get();
+                return GetProductCategories();
             }
         }
+        
+        
         /// <summary>
-        /// Update ProductCategories
+        /// Update Product Categories
         /// </summary>
         /// <returns></returns>
         [Route("")]
         [ResponseType(typeof(List<ProductCategoryDTO>))]
-        public IHttpActionResult Put(ProductCategoryDTO categoryDTO)
+        public IHttpActionResult PutProductCategory(ProductCategoryDTO categoryDTO)
         {
             using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Writing))
             {
@@ -87,22 +84,18 @@ namespace Appliances.data.Controllers
         }
 
         /// <summary>
-        /// Get all ProductCategories
+        /// Get all Product Sub-Categories
         /// </summary>
         /// <returns></returns>
         [Route("")]
-        [ResponseType(typeof(List<ProductCategoryDTO>))]
-        public IHttpActionResult Get()
+        [ResponseType(typeof(List<ProductSubCategoryDTO>))]
+        public IHttpActionResult GetProductSubCategories()
         {
-            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Reading))
-            {
-
-                var categories = _productCategoryRepository.Find(new GetAllSpecification<ProductCategory>()).OrderBy(x => x.CategoryName);
+                var categories = _productSubCategoryRepository.Find(new GetAllSpecification<ProductSubCategory>()).OrderBy(x => x.Name);
                 if (categories == null)
                     return NotFound();
 
                 return Ok(categories.ToList());
-            }
         }
 
         /// <summary>
@@ -110,17 +103,17 @@ namespace Appliances.data.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("")]
-        [ResponseType(typeof(List<ProductCategoryDTO>))]
-        public IHttpActionResult Post(ProductCategoryDTO categoryDTO)
+        [ResponseType(typeof(List<ProductSubCategoryDTO>))]
+        public IHttpActionResult PostProductSubCategories(ProductSubCategoryDTO categoryDTO)
         {
             using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Writing))
             {
 
-                ProductCategory categories = ProductCategory.Create(categoryDTO.CategoryName);
-                _productCategoryRepository.Add(categories);
+                ProductSubCategory categories = ProductSubCategory.Create(categoryDTO.Name,categoryDTO.BrandName,categoryDTO.OperatingSystem,categoryDTO.Description);
+                _productSubCategoryRepository.Add(categories);
                 unitOfWork.SaveChanges();
 
-                return Get();
+                return GetProductSubCategories();
             }
         }
         /// <summary>
@@ -128,27 +121,30 @@ namespace Appliances.data.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("")]
-        [ResponseType(typeof(List<ProductCategoryDTO>))]
-        public IHttpActionResult Put(ProductCategoryDTO categoryDTO)
+        [ResponseType(typeof(List<ProductSubCategoryDTO>))]
+        public IHttpActionResult PutProductSubCategories(ProductSubCategoryDTO categoryDTO)
         {
             using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Writing))
             {
-                var categoryRep = _productCategoryRepository.GetById(categoryDTO.Id);
+                var categoryRep = _productSubCategoryRepository.GetById(categoryDTO.Id);
                 if (categoryRep == null)
                 {
                     return NotFound();
                 }
-                categoryRep.Update(categoryDTO.CategoryName);
+                categoryRep.Update(categoryDTO.Name,categoryDTO.BrandName,categoryDTO.OperatingSystem,categoryDTO.Description);
                 unitOfWork.SaveChanges();
 
-                return Ok(GetCategoryDTO(categoryRep));
+                return Ok(GetSubCategoryDTO(categoryRep));
             }
         }
 
-        private ProductCategoryDTO GetCategoryDTO(ProductCategory category)
+        private ProductSubCategoryDTO GetSubCategoryDTO(ProductSubCategory category)
         {
-            ProductCategoryDTO categoryDTO = new ProductCategoryDTO();
-            categoryDTO.CategoryName = category.CategoryName;
+            ProductSubCategoryDTO categoryDTO = new ProductSubCategoryDTO();
+            categoryDTO.Name = category.Name;
+            categoryDTO.BrandName = category.BrandName;
+            categoryDTO.OperatingSystem = category.OperatingSystem;
+            categoryDTO.Description = category.Description;
             return categoryDTO;
         }
     }

@@ -13,5 +13,24 @@ namespace Appliances.Kernel.Framework.Modules.StoreManagement
         public string Name { get; set; }
         public string WebsiteURL { get; set; }
         public virtual ICollection<ProductCategory> ProductCategories { get; set; }
+
+        public ExhibitorStore()
+        {
+
+        }
+        private ExhibitorStore(string name, string websiteUrl)
+        {
+            this.Name = name;
+            this.WebsiteURL = websiteUrl;
+        }
+        public static ExhibitorStore Create(string name, string websiteUrl)
+        {
+            return new ExhibitorStore(name, websiteUrl);
+        }
+        public void Update(string name, string websiteUrl)
+        {
+            this.Name = name;
+            this.WebsiteURL = websiteUrl;
+        }
     }
 }
