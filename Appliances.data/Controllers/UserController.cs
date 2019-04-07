@@ -25,11 +25,14 @@ namespace Appliances.data.Controllers
         [ResponseType(typeof(List<UserDTO>))]
         public IHttpActionResult GetUser()
         {
-            var users = _userRepository.Find(new GetAllSpecification<AppUser>()).OrderBy(x => x.FirstName);
-            if (users == null)
-                return NotFound();
+            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Reading))
+            {
+                var users = _userRepository.Find(new GetAllSpecification<AppUser>()).OrderBy(x => x.FirstName);
+                if (users == null)
+                    return NotFound();
 
-            return Ok(users.ToList());
+                return Ok(users.ToList());
+            }
         }
 
         /// <summary>

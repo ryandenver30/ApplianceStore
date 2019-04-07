@@ -11,5 +11,10 @@ namespace Appliances.data.Models.StoreManagement
         public string Name { get; set; }
         public string WebsiteURL { get; set; }
         public IList<ExhibitorAddressDTO> ExhibitorAddresses { get; set; }
+
+        public ExhibitorStoreDTO()
+        {
+            ExhibitorAddresses = new List<ExhibitorAddressDTO>();
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace Appliances.Kernel.Framework.Modules.StoreManagement
         {
         }
 
-        public ExhibitorAddress(string address, int zipcode, string phoneNo, string officeNo, string exhibitorName, string emailId,DbGeography location) : this()
+        public ExhibitorAddress(string address, int zipcode, string phoneNo, string officeNo, string exhibitorName, string emailId,string location) : this()
         {
             Validate(address, zipcode, phoneNo, officeNo, exhibitorName, emailId,location);
             this.Address = address;
@@ -38,21 +38,22 @@ namespace Appliances.Kernel.Framework.Modules.StoreManagement
             this.OfficeNo = officeNo;
             this.ExhibitorName = exhibitorName;
             this.EmailId = emailId;
-            this.Location = location;
+            this.Location = DbGeography.FromText(location);
+
         }
 
-        private static void Validate(string address, int zipcode, string phoneNo, string officeNo, string exhibitorName, string emailId, DbGeography location)
+        private static void Validate(string address, int zipcode, string phoneNo, string officeNo, string exhibitorName, string emailId, string location)
         {
             if (String.IsNullOrEmpty(address))
                 throw new ValidationException("Invalid Exhibitor Address");
         }
 
-        public static ExhibitorAddress Create(string address, int zipcode, string phoneNo, string officeNo, string exhibitorName, string emailId, DbGeography location)
+        public static ExhibitorAddress Create(string address, int zipcode, string phoneNo, string officeNo, string exhibitorName, string emailId, string location)
         {
             return new ExhibitorAddress(address, zipcode, phoneNo, officeNo, exhibitorName, emailId, location);
         }
 
-        public void Update(string address, int zipcode, string phoneNo, string officeNo, string exhibitorName, string emailId, DbGeography location)
+        public void Update(string address, int zipcode, string phoneNo, string officeNo, string exhibitorName, string emailId, string location)
         {
             Validate(address, zipcode, phoneNo, officeNo, exhibitorName, emailId, location);
             this.Address = address;
@@ -61,7 +62,7 @@ namespace Appliances.Kernel.Framework.Modules.StoreManagement
             this.OfficeNo = officeNo;
             this.ExhibitorName = exhibitorName;
             this.EmailId = emailId;
-            this.Location = location;
+            this.Location = DbGeography.FromText(location);
         }
     }
 }

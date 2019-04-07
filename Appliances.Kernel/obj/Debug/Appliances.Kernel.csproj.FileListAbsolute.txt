@@ -30,3 +30,9 @@ B:\Projects\DOT-NET\Appliances.Kernel\Appliances.Kernel\obj\Debug\Appliances.Ker
 B:\Projects\DOT-NET\Appliances.Kernel\Appliances.Kernel\obj\Debug\Appliances.Kernel.pdb
 B:\Projects\DOT-NET\Appliances.Kernel\Appliances.Kernel\obj\Debug\Appliances.Kernel.Migrations.Initial.resources
 B:\Projects\DOT-NET\Appliances.Kernel\Appliances.Kernel\obj\Debug\Appliances.Kernel.csproj.GenerateResource.cache
+B:\Projects\DOT-NET\Appliances.Kernel\Appliances.Kernel\bin\Debug\SqlServerTypes\x64\msvcr120.dll
+B:\Projects\DOT-NET\Appliances.Kernel\Appliances.Kernel\bin\Debug\SqlServerTypes\x64\SqlServerSpatial140.dll
+B:\Projects\DOT-NET\Appliances.Kernel\Appliances.Kernel\bin\Debug\SqlServerTypes\x86\msvcr120.dll
+B:\Projects\DOT-NET\Appliances.Kernel\Appliances.Kernel\bin\Debug\SqlServerTypes\x86\SqlServerSpatial140.dll
+B:\Projects\DOT-NET\Appliances.Kernel\Appliances.Kernel\bin\Debug\Microsoft.SqlServer.Types.dll
+B:\Projects\DOT-NET\Appliances.Kernel\Appliances.Kernel\obj\Debug\Appliances.Kernel.Migrations.AddedAppUer.resources

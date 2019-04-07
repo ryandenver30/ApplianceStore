@@ -15,6 +15,7 @@ namespace Appliances.data.Controllers
     public class StateController : ApiController
     {
         private IRepository<State> _stateRepository = new Repository<State>();
+        private IRepository<Country> _countryRepository = new Repository<Country>();
 
         /// <summary>
         /// Get all State
@@ -27,7 +28,6 @@ namespace Appliances.data.Controllers
         {
             using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Reading))
             {
-
                 var states = _stateRepository.Find(new GetAllSpecification<State>()).OrderBy(x => x.StateName);
                 if (states == null)
                     return NotFound();
@@ -42,13 +42,18 @@ namespace Appliances.data.Controllers
         /// <returns></returns>
         [Route("")]
         [ResponseType(typeof(List<StateDTO>))]
-        public IHttpActionResult Post(StateDTO stateDTO)
+        public IHttpActionResult Post(Guid countryId ,StateDTO stateDTO)
         {
-            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Reading))
+            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Writing))
             {
-                var state = State.Create(stateDTO.StateName,stateDTO.StateCode);
-                _stateRepository.Add(state);
+                var country = _countryRepository.GetById(countryId);
+                if (country == null)
+                    return NotFound();
 
+                var state = State.Create(stateDTO.StateName,stateDTO.StateCode);
+                state.Country = country;
+                _stateRepository.Add(state);
+                unitOfWork.SaveChanges();
                 return Get();
             }
         }
@@ -62,13 +67,13 @@ namespace Appliances.data.Controllers
         [ResponseType(typeof(StateDTO))]
         public IHttpActionResult Put(StateDTO stateDTO)
         {
-            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Reading))
+            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Writing))
             {
-
                 var state = _stateRepository.GetById(stateDTO.Id);
                 if (state == null)
                     return NotFound();
                 state.Update(stateDTO.StateName, stateDTO.StateCode);
+                unitOfWork.SaveChanges();
                 return Ok(GetDTO(state));
             }
         }

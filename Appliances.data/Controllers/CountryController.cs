@@ -24,11 +24,14 @@ namespace Appliances.data.Controllers
         [ResponseType(typeof(List<CountryDTO>))]
         public IHttpActionResult Get()
         {
+            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Reading))
+            {
                 var countries = _countryRepository.Find(new GetAllSpecification<Country>()).OrderBy(x => x.CountryName);
                 if (countries == null)
                     return NotFound();
 
                 return Ok(countries.ToList());
+            }
         }
 
         /// <summary>
@@ -44,9 +47,7 @@ namespace Appliances.data.Controllers
                 Country country = Country.Create(countryDTO.Name,countryDTO.CountryCode,countryDTO.CountryPhoneCode);
                 _countryRepository.Add(country);
                 
-
                 unitOfWork.SaveChanges();
-
                 return Get();
             }
         }

@@ -1,6 +1,7 @@
 ﻿using Appliances.Kernel.Framework.Modules;
 using Appliances.Kernel.Framework.Modules.ProductManagement;
 using Appliances.Kernel.Framework.Modules.StoreManagement;
+using Appliances.Kernel.Framework.Modules.UserManagement;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -34,5 +35,6 @@ namespace Appliances.Kernel.Framework.Repository
         public DbSet<ProductSubCategory> ProductSubCategories { get; set; }
         public DbSet<ExhibitorStore> ExhibitorStores { get; set; }
         public DbSet<ExhibitorAddress> ExhibitorAddresses { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
     }
 }

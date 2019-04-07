@@ -29,11 +29,14 @@ namespace Appliances.data.Controllers
         [ResponseType(typeof(List<ExhibitorStoreDTO>))]
         public IHttpActionResult GetExhibitor()
         {
-            var stores = _exhibitorStoreRepository.Find(new GetAllSpecification<ExhibitorStore>()).OrderBy(x => x.Name); ;
-            if (stores == null)
-                return NotFound();
+            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Reading))
+            {
+                var stores = _exhibitorStoreRepository.Find(new GetAllSpecification<ExhibitorStore>()).OrderBy(x => x.Name); ;
+                if (stores == null)
+                    return NotFound();
 
-            return Ok(stores.ToList());
+                return Ok(stores.ToList());
+            }
         }
 
         /// <summary>
@@ -47,6 +50,7 @@ namespace Appliances.data.Controllers
             using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Writing))
             {
                 ExhibitorStore store = ExhibitorStore.Create(storeDTO.Name, storeDTO.WebsiteURL);
+                _exhibitorStoreRepository.Add(store);
                 foreach (ExhibitorAddressDTO address in storeDTO.ExhibitorAddresses)
                 {
                     ExhibitorAddress _address = ExhibitorAddress.Create(address.Address, address.ZipCode, address.PhoneNo, address.OfficeNo, address.ExhibitorName, address.EmailId, address.Location);
@@ -58,7 +62,6 @@ namespace Appliances.data.Controllers
                     _exhibitorStoreAddressRepository.Add(_address);
                 }
 
-                _exhibitorStoreRepository.Add(store);
                 unitOfWork.SaveChanges();
 
                 return GetExhibitor();
@@ -94,20 +97,21 @@ namespace Appliances.data.Controllers
         [ResponseType(typeof(List<ExhibitorStore>))]
         public IHttpActionResult GetNearbyStores(string location)
         {
-            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Writing))
+            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Reading))
             {
-                var userLocation = DbGeography.FromText(location);
+                DbGeography userLocation = DbGeography.FromText(location);
                 var criteria = new ExhibitorStoreCriteria { location = userLocation };
                 var specification = new ExhibitorStoreSpecification(criteria);
-                var addresses = _exhibitorStoreAddressRepository.Find(specification);
-                List<ExhibitorStore> stores = new List<ExhibitorStore>();
+                var addresses = _exhibitorStoreAddressRepository.Find(new GetAllSpecification<ExhibitorAddress>()).OrderBy(x => x.Location.Distance(userLocation));
+                List<ExhibitorStoreDTO> storesDTO = new List<ExhibitorStoreDTO>();
                 foreach (ExhibitorAddress address in addresses)
                 {
                     var exhibitorStore = _exhibitorStoreRepository.GetById(address.Exhibitor.Id);
-                    stores.Add(exhibitorStore);
+                    var storeDTO = GetStoreDTO(exhibitorStore,address);
+                    storesDTO.Add(storeDTO);
                 }
 
-                return Ok();
+                return Ok(storesDTO);
             }
         }
 
@@ -115,12 +119,31 @@ namespace Appliances.data.Controllers
         private ExhibitorStoreDTO GetDTO(ExhibitorStore storeRep)
         {
             ExhibitorStoreDTO storeDTO = new ExhibitorStoreDTO();
+            storeDTO.Id = storeRep.Id;
             storeDTO.Name = storeRep.Name;
             storeDTO.WebsiteURL = storeRep.WebsiteURL;
             return storeDTO;
         }
 
+        private ExhibitorStoreDTO GetStoreDTO(ExhibitorStore store,ExhibitorAddress address)
+        {
+            ExhibitorStoreDTO storeDTO = new ExhibitorStoreDTO();
+            storeDTO.Id = store.Id;
+            storeDTO.Name = store.Name;
+            storeDTO.WebsiteURL = store.WebsiteURL;
 
+            ExhibitorAddressDTO addressDTO = new ExhibitorAddressDTO();
+            addressDTO.Id = address.Id;
+            addressDTO.Address = address.Address;
+            addressDTO.EmailId = address.EmailId;
+            addressDTO.ExhibitorName = address.ExhibitorName;
+            addressDTO.OfficeNo = address.OfficeNo;
+            addressDTO.PhoneNo = address.PhoneNo;
+            addressDTO.ZipCode = address.ZipCode;
+
+            storeDTO.ExhibitorAddresses.Add(addressDTO);
+            return storeDTO;
+        }
 
         private IList<ExhibitorStoreDTO> GetDTO(IList<ExhibitorStore> storeReps)
         {

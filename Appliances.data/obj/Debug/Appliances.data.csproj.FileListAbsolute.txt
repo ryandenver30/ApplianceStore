@@ -400,3 +400,8 @@ B:\Projects\DOT-NET\Appliances.Kernel\Appliances.data\obj\Debug\Appliances.data.
 B:\Projects\DOT-NET\Appliances.Kernel\Appliances.data\obj\Debug\Appliances.data.csproj.CopyComplete
 B:\Projects\DOT-NET\Appliances.Kernel\Appliances.data\obj\Debug\Appliances.data.dll
 B:\Projects\DOT-NET\Appliances.Kernel\Appliances.data\obj\Debug\Appliances.data.pdb
+B:\Projects\DOT-NET\Appliances.Kernel\Appliances.data\bin\SqlServerTypes\x64\msvcr120.dll
+B:\Projects\DOT-NET\Appliances.Kernel\Appliances.data\bin\SqlServerTypes\x64\SqlServerSpatial140.dll
+B:\Projects\DOT-NET\Appliances.Kernel\Appliances.data\bin\SqlServerTypes\x86\msvcr120.dll
+B:\Projects\DOT-NET\Appliances.Kernel\Appliances.data\bin\SqlServerTypes\x86\SqlServerSpatial140.dll
+B:\Projects\DOT-NET\Appliances.Kernel\Appliances.data\bin\Microsoft.SqlServer.Types.dll

@@ -40,7 +40,7 @@ namespace Appliances.Kernel.Framework.Repository
 
         public IList<T> Find(ISpecification<T> specification)
         {
-            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Writing))
+            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Reading))
             {
                 var queryable = unitOfWork.DbContext.Set<T>().AsExpandable().Where(specification.Expression);
                 return queryable.ToList();
@@ -49,7 +49,7 @@ namespace Appliances.Kernel.Framework.Repository
 
         public IList<T> Get()
         {
-            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Writing))
+            using (var unitOfWork = new UnitOfWorkScope<AppliancesContext>(UnitOfWorkScopePurpose.Reading))
             {
                 return unitOfWork.DbContext.Set<T>().ToList();
             }
